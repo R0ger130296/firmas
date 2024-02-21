@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Archivo Firmado</title>
+</head>
+<body>
+<h2>Descargar Archivo Firmado</h2>
+
+<!-- Enlace o botón para descargar el archivo -->
+<a th:href="@{/descargar}" download="archivoFirmado.xml">
+    <button>Descargar Archivo Firmado</button>
+</a>
+
+<!-- Formulario para la validación -->
+<form action="/verificar" method="get">
+    <button type="submit" >Validar Firma</button>
+</form>
+</body>
+</html>

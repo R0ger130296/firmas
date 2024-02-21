@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Firma</title>
+</head>
+<body>
+<h2>Verificar Firma</h2>
+
+<p th:if="${firmaValida}">
+    La firma es válida.
+</p>
+<p th:unless="${firmaValida}">
+    La firma no es válida. Error: <span th:text="${error}"></span>
+</p>
+
+<!-- Puedes incluir más detalles sobre la verificación si es necesario -->
+</body>
+</html>

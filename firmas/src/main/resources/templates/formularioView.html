@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Firma</title>
+</head>
+<body>
+<h2>Formulario de Firma</h2>
+
+<form action="/firmar" method="post" enctype="multipart/form-data">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="persona.nombre" required>
+    <br>
+
+    <label for="apellido">Apellido:</label>
+    <input type="text" id="apellido" name="persona.apellido" required>
+    <br>
+
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="persona.edad" required>
+    <br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="persona.email" required>
+    <br>
+
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" name="persona.direction" required>
+    <br>
+
+    <label for="file">Archivo .p12:</label>
+    <input type="file" id="file" name="file" accept=".p12" required>
+    <br>
+
+    <button type="submit">Firmar</button>
+</form>
+</body>
+</html>

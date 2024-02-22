@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificar Firma</title>
+    <!-- Agregar el enlace a Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h2>Verificar Firma</h2>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+<div class="bg-white p-8 rounded shadow-md max-w-md w-full">
+    <h2 class="text-2xl font-bold mb-4">Verificar Firma</h2>
 
-<p th:if="${firmaValida}">
-    La firma es válida.
-</p>
-<p th:unless="${firmaValida}">
-    La firma no es válida. Error: <span th:text="${error}"></span>
-</p>
+    <p th:if="${firmaValida}" class="text-green-500">
+        La firma es válida.
+    </p>
+    <p th:unless="${firmaValida}" class="text-red-500">
+        La firma no es válida. Error: <span th:text="${error}"></span>
+    </p>
 
-<!-- Puedes incluir más detalles sobre la verificación si es necesario -->
+    <!-- Puedes incluir más detalles sobre la verificación si es necesario -->
+</div>
 </body>
 </html>

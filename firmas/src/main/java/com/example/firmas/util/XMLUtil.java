@@ -20,34 +20,18 @@ public class XMLUtil {
             Element personaElement = document.createElement("persona");
 
             // Crear elementos para los datos de la persona
-            Element nombreElement = document.createElement("nombre");
-            nombreElement.setTextContent(persona.getNombre());
-
-            Element apellidoElement = document.createElement("apellido");
-            apellidoElement.setTextContent(persona.getApellido());
-
-            Element edadElement = document.createElement("edad");
-            edadElement.setTextContent(String.valueOf(persona.getEdad()));
-
-            Element emailElement = document.createElement("email");
-            emailElement.setTextContent(String.valueOf(persona.getEmail()));
-
-            Element directionElement = document.createElement("direction");
-            directionElement.setTextContent(String.valueOf(persona.getDirection()));
-
-            // Agregar elementos al elemento raíz
-            personaElement.appendChild(nombreElement);
-            personaElement.appendChild(apellidoElement);
-            personaElement.appendChild(edadElement);
-            personaElement.appendChild(emailElement);
-            personaElement.appendChild(directionElement);
+            agregarElemento(document, personaElement, "nombre", persona.getNombre());
+            agregarElemento(document, personaElement, "apellido", persona.getApellido());
+            agregarElemento(document, personaElement, "edad", String.valueOf(persona.getEdad()));
+            agregarElemento(document, personaElement, "email", persona.getEmail());
+            agregarElemento(document, personaElement, "direccion", persona.getDireccion());
 
             // Agregar el elemento raíz al documento
             document.appendChild(personaElement);
 
             return document;
         } catch (Exception e) {
-            e.printStackTrace();
+            manejarExcepcion(e);
             return null;
         }
     }
@@ -59,8 +43,19 @@ public class XMLUtil {
             DocumentBuilder builder = factory.newDocumentBuilder();
             return builder.parse(inputStream);
         } catch (Exception e) {
-            e.printStackTrace();
+            manejarExcepcion(e);
             return null;
         }
+    }
+
+    private static void agregarElemento(Document document, Element padre, String nombre, String contenido) {
+        Element elemento = document.createElement(nombre);
+        elemento.setTextContent(contenido);
+        padre.appendChild(elemento);
+    }
+
+    private static void manejarExcepcion(Exception e) {
+        // Manejar la excepción según las necesidades de tu aplicación
+        e.printStackTrace();
     }
 }

@@ -5,7 +5,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.cert.X509Certificate;
 
 @Controller
@@ -16,27 +20,28 @@ public class VerificarController {
         return "verificarView";
     }
 
-    @GetMapping("/verificar")
-    public String verificarFirma(Model model, HttpSession session) {
+    @PostMapping("/verificar")
+    public String verificarFirma(Model model, HttpSession session,
+                                 @RequestParam("fileFirm") MultipartFile file) throws IOException {
         // Obtener el archivo firmado de la sesión
-        byte[] archivoFirmado = (byte[]) session.getAttribute("archivoFirmado");
+        byte[] archivoFirmado = file.getBytes();
 
         // Obtener el certificado necesario (ajusta según tu aplicación)
         X509Certificate certificado = obtenerCertificadoDesdeSesionOtroMedio(session);
 
-        if (archivoFirmado != null && certificado != null) {
+        // Retornar la página de verificación
+        if(certificado != null) {
             // Verificar la firma del archivo
             boolean firmaValida = VerificacionUtil.verificarFirma(archivoFirmado, certificado);
 
             // Agregar el resultado de la verificación al modelo
             model.addAttribute("firmaValida", firmaValida);
-            return "verificarView"; // Retornar la página de verificación
         } else {
             // Manejo de errores: Archivo o certificado no disponibles
             model.addAttribute("firmaValida", false);
             model.addAttribute("error", "Archivo o certificado no disponibles para la verificación.");
-            return "verificarView"; // Retornar la página de verificación
         }
+        return "verificarView"; // Retornar la página de verificación
     }
 
     // Método de ejemplo para obtener el certificado (ajusta según tus necesidades)

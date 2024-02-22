@@ -22,7 +22,7 @@ public class DescargaController {
         if (archivoFirmado != null) {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_XML);
-            headers.setContentDisposition(ContentDisposition.builder("attachment").filename("archivoFirmado.xml").build());
+            headers.setContentDisposition(ContentDisposition.builder("attachment").filename("archivoFirmado2.xml").build());
 
             // Establece la bandera como verdadera
             return new ResponseEntity<>(archivoFirmado, headers, HttpStatus.OK);

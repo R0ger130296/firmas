@@ -8,5 +8,5 @@ public class Persona {
         private String apellido;
         private int edad;
         private String email;
-        private String Direction;
+        private String direccion;
 }

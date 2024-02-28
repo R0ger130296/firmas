@@ -7,7 +7,7 @@
         <option name="delegatedBuild" value="false" />
         <option name="testRunner" value="PLATFORM" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/firmas" />
-        <option name="gradleHome" value="$PROJECT_DIR$/../../../../Program Files/gradle-4.10.3" />
+        <option name="gradleJvm" value="21" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/firmas" />

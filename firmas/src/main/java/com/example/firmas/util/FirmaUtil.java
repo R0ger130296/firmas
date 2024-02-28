@@ -1,6 +1,7 @@
 package com.example.firmas.util;
 
 import com.example.firmas.model.Persona;
+import org.apache.xml.security.algorithms.MessageDigestAlgorithm;
 import org.apache.xml.security.signature.XMLSignature;
 import org.apache.xml.security.transforms.Transforms;
 import org.apache.xml.security.utils.Constants;
@@ -9,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
@@ -19,6 +19,8 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FirmaUtil {
 
@@ -30,8 +32,7 @@ public class FirmaUtil {
     }
 
     public static FirmaResultado firmarArchivo(Persona persona, MultipartFile file) {
-        try {
-            org.apache.xml.security.Init.init();
+        try {          org.apache.xml.security.Init.init();
 
             if (file == null || file.isEmpty()) {
                 throw new IllegalArgumentException("El archivo .p12 no fue proporcionado o está vacío.");
@@ -54,11 +55,22 @@ public class FirmaUtil {
                 Transforms transforms = new Transforms(document);
                 transforms.addTransform(Transforms.TRANSFORM_ENVELOPED_SIGNATURE);
                 transforms.addTransform(Transforms.TRANSFORM_C14N_WITH_COMMENTS);
-                signature.addDocument("", transforms, "http://www.w3.org/2001/04/xmlenc#sha256");
-
+                signature.addDocument("", transforms, MessageDigestAlgorithm.ALGO_ID_DIGEST_SHA256);
                 signature.addKeyInfo(cert);
                 signature.addKeyInfo(cert.getPublicKey());
-
+                // Crear elemento XAdES-BES
+                Element xadesBESSignature = signature.getElement();
+                Element qualProps = signature.getDocument().createElementNS(Constants.SignatureSpecNS, "QualifyingProperties");
+                xadesBESSignature.appendChild(qualProps);
+                // Incluir propiedades firmadas para compatibilidad con XAdES
+                Element signedProps = signature.getDocument().createElementNS(Constants.SignatureSpecNS, "SignedProperties");
+                qualProps.appendChild(signedProps);
+                Element signedSignatureProperties = signature.getDocument().createElementNS(Constants.SignatureSpecNS, "SignedSignatureProperties");
+                signedProps.appendChild(signedSignatureProperties);
+                Element signingTime = signature.getDocument().createElementNS(Constants.SignatureSpecNS, "SigningTime");
+                signingTime.setTextContent(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ").format(new Date()));
+                signedSignatureProperties.appendChild(signingTime);
+                // **Fin modificaciones para XAdES**
                 signature.sign(privateKey);
 
                 // El siguiente código ha sido modificado para agregar la firma al documento original

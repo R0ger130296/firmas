@@ -1,11 +1,11 @@
 package com.example.firmas.util;
 
-import org.apache.xml.security.Init;
 import org.apache.xml.security.signature.XMLSignature;
 import org.apache.xml.security.utils.Constants;
 import org.apache.xml.security.utils.ElementProxy;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import java.io.ByteArrayInputStream;
 import java.security.cert.X509Certificate;
@@ -25,7 +25,14 @@ public class VerificacionUtil {
                 ElementProxy.setDefaultPrefix(Constants.SignatureSpecNS, "");
 
                 // Obtener la firma del documento
-                Element signatureElement = (Element) document.getElementsByTagNameNS(Constants.SignatureSpecNS, "Signature").item(0);
+                NodeList signatureNodes = document.getElementsByTagNameNS(Constants.SignatureSpecNS, "Signature");
+
+                if (signatureNodes.getLength() == 0) {
+                    System.out.println("No se encontró la firma en el documento.");
+                    return false;
+                }
+
+                Element signatureElement = (Element) signatureNodes.item(0);
                 XMLSignature signature = new XMLSignature(signatureElement, "");
 
                 // Verificar la firma

@@ -26,7 +26,7 @@ dependencies {
 		implementation 'com.googlecode.xades4j:xades4j:2.2.2'
 		implementation 'org.bouncycastle:bcpkix-jdk15on:1.68'
 		implementation 'org.bouncycastle:bcprov-jdk15on:1.69'
-	implementation 'org.apache.santuario:xmlsec:2.2.4'
+	implementation 'org.apache.santuario:xmlsec:4.0.1'
 	implementation 'xerces:xercesImpl:2.12.2'
 }
 

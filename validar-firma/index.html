@@ -1,0 +1,31 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Test</h1>
+    <button type="button" onclick="validar()">Validar</button>
+
+    <script>
+      const validar = () => {
+        const formData = new FormData();
+        formData.append('xml', '<xml-document-here>');
+        formData.append('p12', file);
+        formData.append('password', 'password');
+
+        fetch('127.0.0.1:3000/v1/validar', {
+          method: 'POST',
+          body: formData,
+        }).then((response) => {
+          if (response.ok) {
+            // La firma es válida
+          } else {
+            // La firma no es válida
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

@@ -60,8 +60,8 @@ public class FirmaUtil {
                 signature.addKeyInfo(cert.getPublicKey());
                 // Crear elemento XAdES-BES
                 Element xadesBESSignature = signature.getElement();
-                //Element qualProps = signature.getDocument().createElementNS(Constants.SignatureSpecNS, "QualifyingProperties");
-                //xadesBESSignature.appendChild(qualProps);
+                Element qualProps = signature.getDocument().createElementNS(Constants.SignatureSpecNS, "QualifyingProperties");
+                xadesBESSignature.appendChild(qualProps);
                 // Incluir propiedades firmadas para compatibilidad con XAdES
                 Element signedProps = signature.getDocument().createElementNS(Constants.SignatureSpecNS, "SignedProperties");
                 //qualProps.appendChild(signedProps);

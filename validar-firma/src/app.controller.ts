@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AppService } from './app.service';
 import * as fs from 'fs';
 import { Application, Parse, SignedXml } from 'xadesjs';
 import { Crypto } from '@peculiar/webcrypto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 Application.setEngine('NodeJS', new Crypto());
 
@@ -16,10 +17,13 @@ export class AppController {
   }
 
   @Post('v1/validar')
-  async validateXml(@Body() data: { xml: string }): Promise<Boolean> {
-    const xmlPath = data.xml;
-    const xmlString = fs.readFileSync(xmlPath, 'utf-8');
-    const signedDocument = Parse(xmlString);
+  @UseInterceptors(FileInterceptor('file'))
+  async validateXml(@UploadedFile() xml:  Express.Multer.File ): Promise<Boolean> {
+    //const xmlPath = data.xml;
+    //const xmlString = fs.readFileSync(xmlPath, 'utf-8');
+    console.log(xml)
+    console.log(xml.buffer.toString())
+    const signedDocument = Parse(xml.buffer.toString());
     const xmlSignature = signedDocument.getElementsByTagNameNS(
       'http://www.w3.org/2000/09/xmldsig#',
       'Signature',

@@ -21,8 +21,6 @@ export class AppController {
   async validateXml(@UploadedFile() xml:  Express.Multer.File ): Promise<Boolean> {
     //const xmlPath = data.xml;
     //const xmlString = fs.readFileSync(xmlPath, 'utf-8');
-    console.log(xml)
-    console.log(xml.buffer.toString())
     const signedDocument = Parse(xml.buffer.toString());
     const xmlSignature = signedDocument.getElementsByTagNameNS(
       'http://www.w3.org/2000/09/xmldsig#',

@@ -64,7 +64,7 @@ public class VerificarController {
     }*/
 
 
-    // Método de ejemplo para obtener el certificado (ajusta según tus necesidades)
+    // Método de ejemplo para obtener el certificado
     private X509Certificate obtenerCertificadoDesdeSesionOtroMedio(HttpSession session) {
         // Supongamos que has almacenado el certificado con el nombre "certificado"
         Object certificadoObj = session.getAttribute("certificado");
